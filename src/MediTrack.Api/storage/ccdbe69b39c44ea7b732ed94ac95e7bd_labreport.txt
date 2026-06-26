@@ -1,0 +1,5 @@
+PATIENT LAB REPORT
+Glucose: 110 mg/dL
+Cholesterol: 190
+BP: 130/85
+No acute distress.

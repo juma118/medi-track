@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-MediTrack.Workers-0182e47e-42d7-489b-a1b3-f61d25ad496f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MediTrack.Application\MediTrack.Application.csproj" />
+    <ProjectReference Include="..\MediTrack.Infrastructure\MediTrack.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
