@@ -2,7 +2,6 @@ using MediTrack.Domain.Enums;
 
 namespace MediTrack.Application.Portal;
 
-// ----- Patient self-service -----
 
 public record SelfBookRequest(Guid DoctorId, DateTime ScheduledAt, string? Reason);
 
@@ -30,8 +29,6 @@ public record MessageDto(
     bool Read);
 
 public record SendMessageRequest(string Body);
-
-// ----- Account provisioning (clinic creates a portal login for a patient) -----
 
 public record CreatePatientAccountRequest(string Email, string Password);
 

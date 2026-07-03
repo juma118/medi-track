@@ -1,0 +1,141 @@
+@use '@angular/material' as mat;
+
+// ---------------------------------------------------------------------------
+// Angular Material (M3) theme. We start from the built-in cyan/violet palettes
+// (closest to the React app's teal/indigo MUI theme) and then override the
+// system color tokens with the exact Tailwind ramp values used in lib/theme.ts.
+// ---------------------------------------------------------------------------
+html {
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$cyan-palette,
+        tertiary: mat.$violet-palette,
+        theme-type: light,
+      ),
+      typography: (
+        plain-family: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+        brand-family: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+      ),
+      density: 0,
+    )
+  );
+
+  // Brand palette overrides — teal primary, indigo secondary (lib/theme.ts).
+  --mat-sys-primary: #0d9488;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #ccfbf1;
+  --mat-sys-on-primary-container: #134e4a;
+  --mat-sys-secondary: #4f46e5;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #e0e7ff;
+  --mat-sys-on-secondary-container: #312e81;
+  --mat-sys-tertiary: #4f46e5;
+  --mat-sys-on-tertiary: #ffffff;
+  --mat-sys-error: #e11d48;
+  --mat-sys-surface: #ffffff;
+  --mat-sys-background: #f4f6fb;
+  --mat-sys-on-surface: #0f172a;
+  --mat-sys-on-surface-variant: #64748b;
+  --mat-sys-outline: rgba(15, 23, 42, 0.18);
+  --mat-sys-outline-variant: rgba(15, 23, 42, 0.08);
+
+  // Rounded geometry to match MUI's shape.borderRadius = 14.
+  --mat-sys-corner-large: 14px;
+  --mat-sys-corner-medium: 12px;
+  --mat-sys-corner-small: 10px;
+}
+
+// ---------------------------------------------------------------------------
+// Tailwind (preflight disabled in tailwind.config.js — Material owns the reset).
+// ---------------------------------------------------------------------------
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ---------------------------------------------------------------------------
+// Global reset & app chrome
+// ---------------------------------------------------------------------------
+html,
+body {
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #f4f6fb;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-round,
+.mat-icon {
+  font-family: 'Material Icons Round';
+  font-weight: normal;
+  font-style: normal;
+}
+
+// ---------------------------------------------------------------------------
+// Design-system helpers — reproduce MUI's card / surface look.
+// ---------------------------------------------------------------------------
+.brand-card {
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  border-radius: 14px;
+}
+
+.brand-card--pad {
+  padding: 20px 24px;
+}
+
+.text-secondary {
+  color: #64748b;
+}
+
+.soft-surface {
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.outline-surface {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+}
+
+// Section titles (MUI Typography h4/h6 weights)
+.h-page {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.h-section {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+// Buttons: rounded, no text-transform (MUI overrides).
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  --mdc-typography-button-text-transform: none;
+  text-transform: none !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+
+// Chips
+.mat-mdc-standard-chip {
+  --mdc-chip-label-text-weight: 600;
+  font-weight: 600;
+}

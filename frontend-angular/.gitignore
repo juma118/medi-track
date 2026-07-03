@@ -1,0 +1,11 @@
+# Angular / Node
+/dist
+/node_modules
+/out-tsc
+/.angular/cache
+.angular
+npm-debug.log*
+yarn-error.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
