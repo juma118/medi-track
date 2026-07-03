@@ -4,6 +4,30 @@ An **Angular 20 + Angular Material + Tailwind CSS** port of the React/Next.js
 frontend in [`../frontend`](../frontend). Both frontends target the same
 MediTrack API and are feature-equivalent; keep them in sync when the API changes.
 
+## Screenshots
+
+### Landing & sign-in
+
+| Landing page | Sign in |
+| --- | --- |
+| ![Landing page](screenshots/01-landing.png) | ![Sign in](screenshots/02-login.png) |
+
+### Staff (doctor / receptionist)
+
+| Dashboard | Patients |
+| --- | --- |
+| ![Dashboard](screenshots/03-dashboard.png) | ![Patients](screenshots/04-patients.png) |
+
+| AI assistant (symptom analysis + patient-history chat) |
+| --- |
+| ![AI assistant](screenshots/05-ai-assistant.png) |
+
+### Patient portal
+
+| Home | Prescriptions & refills |
+| --- | --- |
+| ![Portal home](screenshots/06-portal-home.png) | ![Portal prescriptions](screenshots/07-portal-prescriptions.png) |
+
 ## Stack mapping (React → Angular)
 
 | React / Next.js                | Angular                                              |

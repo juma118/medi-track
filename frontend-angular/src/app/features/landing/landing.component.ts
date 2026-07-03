@@ -27,8 +27,10 @@ interface Feature {
       <!-- Top bar -->
       <header class="appbar">
         <div class="container bar-inner">
-          <div class="logo"><mat-icon>local_hospital</mat-icon></div>
-          <div class="brand">MediTrack</div>
+          <div class="brand-link" (click)="go('/')" role="link" tabindex="0" (keydown.enter)="go('/')">
+            <div class="logo"><mat-icon>local_hospital</mat-icon></div>
+            <div class="brand">MediTrack</div>
+          </div>
           @if (loggedIn()) {
             <span class="hi">Hi, {{ firstName() }}</span>
             <button mat-flat-button class="btn-white" (click)="goToApp()">

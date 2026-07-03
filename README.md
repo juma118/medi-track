@@ -4,6 +4,32 @@ Event-driven Patient & Health Records platform. **.NET 9 · Clean Architecture �
 
 > ⚠️ MVP uses **synthetic/seed data only**. No real patient data (PHI). HIPAA/BAA compliance is deferred (see `app-idea.md`).
 
+## Screenshots
+
+> App UI captured against live seed data. The Next.js (`frontend/`) and Angular (`frontend-angular/`) builds are feature-equivalent and share the same teal design system.
+
+### Landing & sign-in
+
+| Landing page | Sign in |
+| --- | --- |
+| ![Landing page](frontend-angular/screenshots/01-landing.png) | ![Sign in](frontend-angular/screenshots/02-login.png) |
+
+### Clinic app (doctor / receptionist)
+
+| Dashboard | Patients |
+| --- | --- |
+| ![Dashboard](frontend-angular/screenshots/03-dashboard.png) | ![Patients](frontend-angular/screenshots/04-patients.png) |
+
+| AI assistant — symptom analysis + patient-history chat |
+| --- |
+| ![AI assistant](frontend-angular/screenshots/05-ai-assistant.png) |
+
+### Patient portal
+
+| Home | Prescriptions & refills |
+| --- | --- |
+| ![Portal home](frontend-angular/screenshots/06-portal-home.png) | ![Portal prescriptions](frontend-angular/screenshots/07-portal-prescriptions.png) |
+
 ## Architecture
 
 ```
@@ -24,6 +50,7 @@ Projects (`src/`):
 | `MediTrack.Workers` | Kafka consumers: AI summarizer, notifications, audit persistence |
 | `tests/MediTrack.Tests` | xUnit unit tests (services + validators) |
 | `frontend/` | Next.js 16 (App Router) + TypeScript + Material UI + Tailwind v4 + React Query + Zustand + MUI X Charts + SignalR |
+| `frontend-angular/` | Angular 20 (standalone + signals) + Angular Material + Tailwind v3 + TanStack Angular Query + SignalR — a feature-equivalent port of `frontend/` |
 
 ### Feature highlights
 - **Patient self-service portal**: patients view their own profile, appointments, prescriptions, and AI-summarized records; **self-book appointments**, **request prescription refills**, and **message the clinic** — all scoped to the logged-in patient (staff endpoints return 403).

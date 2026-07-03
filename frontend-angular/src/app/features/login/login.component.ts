@@ -25,7 +25,9 @@ interface Demo {
     <div class="wrap">
       <div class="card brand-card">
         <div class="head">
-          <div class="logo"><mat-icon>local_hospital</mat-icon></div>
+          <div class="logo" style="cursor:pointer;" role="link" tabindex="0" (click)="goHome()" (keydown.enter)="goHome()">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
           <h1 style="font-size:1.4rem;font-weight:700;margin:0;">MediTrack</h1>
           <p class="text-secondary" style="margin:0;font-size:14px;">Sign in to continue</p>
         </div>
@@ -164,6 +166,10 @@ export class LoginComponent {
     if (this.auth.accessToken()) {
       this.router.navigateByUrl(isPatient(this.auth.role()) ? '/portal' : '/dashboard')
     }
+  }
+
+  protected goHome(): void {
+    this.router.navigateByUrl('/')
   }
 
   protected fill(d: Demo): void {

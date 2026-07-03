@@ -42,7 +42,7 @@ export interface NavItem {
         (closed)="mobileOpen.set(false)"
       >
         <div class="drawer-inner">
-          <div class="brand">
+          <div class="brand" role="link" tabindex="0" (click)="goHome()" (keydown.enter)="goHome()">
             <div class="brand-avatar"><mat-icon>local_hospital</mat-icon></div>
             <div>
               <div class="brand-name">MediTrack</div>
@@ -83,7 +83,7 @@ export interface NavItem {
         @if (isMobile()) {
           <mat-toolbar class="topbar">
             <button mat-icon-button (click)="mobileOpen.set(true)"><mat-icon>menu</mat-icon></button>
-            <span class="topbar-title">MediTrack</span>
+            <span class="topbar-title" style="cursor:pointer;" (click)="goHome()">MediTrack</span>
           </mat-toolbar>
         }
         <main class="content"><ng-content></ng-content></main>
@@ -111,6 +111,10 @@ export interface NavItem {
         align-items: center;
         gap: 12px;
         padding: 16px 20px;
+        cursor: pointer;
+      }
+      .brand:hover .brand-name {
+        color: #0d9488;
       }
       .brand-avatar {
         width: 34px;
@@ -261,6 +265,10 @@ export class AppShellComponent {
   protected isActive(href: string): boolean {
     const url = this.currentUrl().split('?')[0]
     return href === '/dashboard' || href === '/portal' ? url === href : url.startsWith(href)
+  }
+
+  protected goHome(): void {
+    this.router.navigateByUrl('/')
   }
 
   protected signOut(): void {
