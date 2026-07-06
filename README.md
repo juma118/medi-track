@@ -4,7 +4,7 @@ Event-driven Patient & Health Records platform. **.NET 9 · Clean Architecture �
 
 ![MediTrack landing page](docs/screenshots/landing.png)
 
-> ⚠️ MVP uses **synthetic/seed data only**. No real patient data (PHI). HIPAA/BAA compliance is deferred (see `app-idea.md`).
+> ⚠️ MVP uses **synthetic/seed data only**. No real patient data (PHI). HIPAA/BAA compliance is deferred.
 
 ## Architecture
 
