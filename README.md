@@ -2,6 +2,8 @@
 
 Event-driven Patient & Health Records platform. **.NET 9 · Clean Architecture · PostgreSQL · Redis · Kafka · AI · Next.js 16 + MUI.**
 
+![MediTrack landing page](docs/screenshots/landing.png)
+
 > ⚠️ MVP uses **synthetic/seed data only**. No real patient data (PHI). HIPAA/BAA compliance is deferred (see `app-idea.md`).
 
 ## Architecture
@@ -38,6 +40,48 @@ Projects (`src/`):
 - **Resilience**: Polly standard handler on the AI client; Kafka retry + dead-letter (`<topic>.dlq`)
 - **Rate limiting** on AI endpoints (10/min); **deep health checks** (Postgres/Redis/Kafka); **OpenTelemetry** tracing + metrics
 - **Immutable audit trail**: sensitive access/mutations are published to Kafka and persisted by the audit worker
+
+## Screenshots
+
+### Clinic app (staff)
+
+| Dashboard | Patient detail |
+|---|---|
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Patient detail](docs/screenshots/patient-detail.png) |
+| 5 KPI tiles + 7-day trend chart + today's schedule | Profile, appointments, prescriptions, records & messaging |
+
+| Appointments | AI assistant |
+|---|---|
+| ![Appointments](docs/screenshots/appointments.png) | ![AI assistant](docs/screenshots/ai.png) |
+| Today's schedule + status workflow | Symptom analyzer + patient-history chat |
+
+### Patient portal
+
+| Portal home | Records (AI summaries) |
+|---|---|
+| ![Patient portal](docs/screenshots/portal.png) | ![Portal records](docs/screenshots/portal-records.png) |
+| Next appointment, active meds, quick links | Read-only records with AI summaries |
+
+<details>
+<summary>More screens</summary>
+
+| Login | Patients (search) |
+|---|---|
+| ![Login](docs/screenshots/login.png) | ![Patients](docs/screenshots/patients.png) |
+
+| Prescriptions | Medical records |
+|---|---|
+| ![Prescriptions](docs/screenshots/prescriptions.png) | ![Records](docs/screenshots/records.png) |
+
+| Refill requests | Portal — appointments |
+|---|---|
+| ![Refill requests](docs/screenshots/refill-requests.png) | ![Portal appointments](docs/screenshots/portal-appointments.png) |
+
+| Portal — prescriptions | Portal — messages |
+|---|---|
+| ![Portal prescriptions](docs/screenshots/portal-prescriptions.png) | ![Portal messages](docs/screenshots/portal-messages.png) |
+
+</details>
 
 ## Prerequisites
 - .NET SDK 9 (targets `net9.0`)
