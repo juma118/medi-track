@@ -5,7 +5,6 @@ using MediTrack.Domain.Enums;
 
 namespace MediTrack.Api.Security;
 
-/// <summary>Resolves the authenticated caller from the JWT claims on the current request.</summary>
 public class CurrentUser : ICurrentUser
 {
     private readonly IHttpContextAccessor _accessor;

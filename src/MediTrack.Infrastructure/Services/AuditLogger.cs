@@ -3,7 +3,6 @@ using MediTrack.Application.Events;
 
 namespace MediTrack.Infrastructure.Services;
 
-/// <summary>Emits audit entries as Kafka events; the Audit Worker persists them immutably.</summary>
 public class EventAuditLogger : IAuditLogger
 {
     private readonly IEventPublisher _events;

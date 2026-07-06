@@ -31,8 +31,6 @@ public record MessageDto(
 
 public record SendMessageRequest(string Body);
 
-// ----- Account provisioning (clinic creates a portal login for a patient) -----
-
 public record CreatePatientAccountRequest(string Email, string Password);
 
 public record PatientAccountResult(Guid PatientId, string Email);

@@ -2,10 +2,6 @@ using MediTrack.Application.AI;
 
 namespace MediTrack.Infrastructure.AI;
 
-/// <summary>
-/// Deterministic offline AI used when no provider/key is configured, so the whole
-/// system runs end-to-end in dev without external calls. Swapped for OpenAIService in prod.
-/// </summary>
 public class StubAIService : IAIService
 {
     private const string Disclaimer = "AI-generated suggestion. Not a medical diagnosis. Clinical judgment required.";

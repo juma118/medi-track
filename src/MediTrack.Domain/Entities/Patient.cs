@@ -11,7 +11,6 @@ public class Patient : AuditableEntity
     public string? Email { get; set; }
     public string? MedicalHistory { get; set; }
 
-    // Optional portal login. Null until a clinic creates a patient-portal account.
     public Guid? UserId { get; set; }
     public User? User { get; set; }
 

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Infrastructure.Services;
 
-/// <summary>MVP file storage on local disk. Swap for S3/Azure Blob in production behind the same interface.</summary>
 public class LocalFileStorage : IFileStorage
 {
     private readonly string _basePath;

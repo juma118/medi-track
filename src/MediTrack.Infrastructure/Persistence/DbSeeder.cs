@@ -8,7 +8,6 @@ namespace MediTrack.Infrastructure.Persistence;
 
 public static class DbSeeder
 {
-    /// <summary>Applies migrations and seeds baseline data (idempotent).</summary>
     public static async Task MigrateAndSeedAsync(IServiceProvider sp, CancellationToken ct = default)
     {
         using var scope = sp.CreateScope();
@@ -61,7 +60,6 @@ public static class DbSeeder
 
         await EnsureDemoPatientAccountAsync(db, hasher, ct);
 
-        // A sample appointment for the first patient with the seeded doctor
         var appt = new Appointment
         {
             PatientId = patients[0].Id,
@@ -84,12 +82,10 @@ public static class DbSeeder
         await db.SaveChangesAsync(ct);
     }
 
-    /// <summary>Links the first patient to a demo portal login (idempotent).</summary>
     private static async Task EnsureDemoPatientAccountAsync(ApplicationDbContext db, IPasswordHasher hasher, CancellationToken ct)
     {
         if (await db.Users.AnyAsync(u => u.Email == "patient@meditrack.dev", ct)) return;
 
-        // Prefer the patient with the most data (richest demo), else any unlinked patient.
         var patient = await db.Patients
             .Where(p => p.UserId == null)
             .OrderByDescending(p => p.Appointments.Count)

@@ -42,7 +42,6 @@ public class PrescriptionService : IPrescriptionService
         return Map(p);
     }
 
-    // Uses the meditrack_active_prescriptions() stored procedure.
     public async Task<IReadOnlyList<PrescriptionDto>> GetActiveForPatientAsync(Guid patientId, CancellationToken ct = default) =>
         await _db.Database.QueryAsync(
             "SELECT * FROM meditrack_active_prescriptions(@patient)",

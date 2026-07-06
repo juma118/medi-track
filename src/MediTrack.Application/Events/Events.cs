@@ -1,6 +1,5 @@
 namespace MediTrack.Application.Events;
 
-/// <summary>Canonical Kafka topic names shared by producers and consumers.</summary>
 public static class Topics
 {
     public const string MedicalRecordUploaded = "meditrack.medical-record.uploaded";

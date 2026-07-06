@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MediTrack.Api.Middleware;
 
-/// <summary>Validates every action argument that has a registered FluentValidation validator.</summary>
 public class ValidationFilter : IAsyncActionFilter
 {
     private readonly IServiceProvider _sp;

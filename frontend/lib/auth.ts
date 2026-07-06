@@ -29,7 +29,12 @@ export const useAuth = create<AuthState>()(
       role: null,
       hydrated: false,
       setAuth: (a) =>
-        set({ accessToken: a.accessToken, refreshToken: a.refreshToken, fullName: a.fullName, role: a.role }),
+        set({
+          accessToken: a.accessToken,
+          refreshToken: a.refreshToken,
+          fullName: a.fullName,
+          role: a.role,
+        }),
       setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
       logout: () => set({ accessToken: null, refreshToken: null, fullName: null, role: null }),
     }),

@@ -1,27 +1,51 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from './api'
 import type {
-  Appointment, Doctor, MedicalRecord, Message, Patient, Prescription, RefillRequest,
+  Appointment,
+  Doctor,
+  MedicalRecord,
+  Message,
+  Patient,
+  Prescription,
+  RefillRequest,
 } from './types'
 
 // ---- Patient self-service ----
 export function useMyProfile() {
-  return useQuery({ queryKey: ['portal', 'me'], queryFn: async () => (await api.get<Patient>('/portal/me')).data })
+  return useQuery({
+    queryKey: ['portal', 'me'],
+    queryFn: async () => (await api.get<Patient>('/portal/me')).data,
+  })
 }
 export function useMyAppointments() {
-  return useQuery({ queryKey: ['portal', 'appointments'], queryFn: async () => (await api.get<Appointment[]>('/portal/appointments')).data })
+  return useQuery({
+    queryKey: ['portal', 'appointments'],
+    queryFn: async () => (await api.get<Appointment[]>('/portal/appointments')).data,
+  })
 }
 export function useMyPrescriptions() {
-  return useQuery({ queryKey: ['portal', 'prescriptions'], queryFn: async () => (await api.get<Prescription[]>('/portal/prescriptions')).data })
+  return useQuery({
+    queryKey: ['portal', 'prescriptions'],
+    queryFn: async () => (await api.get<Prescription[]>('/portal/prescriptions')).data,
+  })
 }
 export function useMyRecords() {
-  return useQuery({ queryKey: ['portal', 'records'], queryFn: async () => (await api.get<MedicalRecord[]>('/portal/records')).data })
+  return useQuery({
+    queryKey: ['portal', 'records'],
+    queryFn: async () => (await api.get<MedicalRecord[]>('/portal/records')).data,
+  })
 }
 export function usePortalDoctors() {
-  return useQuery({ queryKey: ['portal', 'doctors'], queryFn: async () => (await api.get<Doctor[]>('/portal/doctors')).data })
+  return useQuery({
+    queryKey: ['portal', 'doctors'],
+    queryFn: async () => (await api.get<Doctor[]>('/portal/doctors')).data,
+  })
 }
 export function useMyRefills() {
-  return useQuery({ queryKey: ['portal', 'refills'], queryFn: async () => (await api.get<RefillRequest[]>('/portal/refills')).data })
+  return useQuery({
+    queryKey: ['portal', 'refills'],
+    queryFn: async () => (await api.get<RefillRequest[]>('/portal/refills')).data,
+  })
 }
 export function useMyMessages() {
   return useQuery({
@@ -49,7 +73,8 @@ export function useRequestRefill() {
 export function useSendMessage() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async (body: { body: string }) => (await api.post<Message>('/portal/messages', body)).data,
+    mutationFn: async (body: { body: string }) =>
+      (await api.post<Message>('/portal/messages', body)).data,
     onSuccess: () => qc.invalidateQueries({ queryKey: ['portal', 'messages'] }),
   })
 }
@@ -62,13 +87,23 @@ export async function openMyRecordFile(recordId: string) {
 
 // ---- Clinic-side portal management ----
 export function usePendingRefills() {
-  return useQuery({ queryKey: ['refill-requests'], queryFn: async () => (await api.get<RefillRequest[]>('/refill-requests')).data })
+  return useQuery({
+    queryKey: ['refill-requests'],
+    queryFn: async () => (await api.get<RefillRequest[]>('/refill-requests')).data,
+  })
 }
 export function useResolveRefill() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async ({ id, approve, responseNote }: { id: string; approve: boolean; responseNote?: string }) =>
-      (await api.put<RefillRequest>(`/refill-requests/${id}`, { approve, responseNote })).data,
+    mutationFn: async ({
+      id,
+      approve,
+      responseNote,
+    }: {
+      id: string
+      approve: boolean
+      responseNote?: string
+    }) => (await api.put<RefillRequest>(`/refill-requests/${id}`, { approve, responseNote })).data,
     onSuccess: () => qc.invalidateQueries({ queryKey: ['refill-requests'] }),
   })
 }
@@ -83,7 +118,8 @@ export function usePatientThread(patientId: string) {
 export function useReplyToPatient(patientId: string) {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async (body: { body: string }) => (await api.post<Message>(`/patients/${patientId}/messages`, body)).data,
+    mutationFn: async (body: { body: string }) =>
+      (await api.post<Message>(`/patients/${patientId}/messages`, body)).data,
     onSuccess: () => qc.invalidateQueries({ queryKey: ['thread', patientId] }),
   })
 }

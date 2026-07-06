@@ -2,8 +2,15 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from './api'
 import { useAuth } from './auth'
 import type {
-  Appointment, AuthResponse, DashboardStats, Doctor, MedicalRecord,
-  Paged, Patient, Prescription, SymptomAnalysis,
+  Appointment,
+  AuthResponse,
+  DashboardStats,
+  Doctor,
+  MedicalRecord,
+  Paged,
+  Patient,
+  Prescription,
+  SymptomAnalysis,
 } from './types'
 
 // ---- Auth ----
@@ -21,7 +28,11 @@ export function usePatients(search: string, page = 1, bloodType = '') {
   return useQuery({
     queryKey: ['patients', search, page, bloodType],
     queryFn: async () =>
-      (await api.get<Paged<Patient>>('/patients', { params: { search, bloodType, page, pageSize: 10 } })).data,
+      (
+        await api.get<Paged<Patient>>('/patients', {
+          params: { search, bloodType, page, pageSize: 10 },
+        })
+      ).data,
   })
 }
 export function usePatient(id: string) {
@@ -41,7 +52,10 @@ export function useCreatePatient() {
 
 // ---- Doctors ----
 export function useDoctors() {
-  return useQuery({ queryKey: ['doctors'], queryFn: async () => (await api.get<Doctor[]>('/doctors')).data })
+  return useQuery({
+    queryKey: ['doctors'],
+    queryFn: async () => (await api.get<Doctor[]>('/doctors')).data,
+  })
 }
 
 // ---- Appointments ----
@@ -58,6 +72,14 @@ export function useTodayAppointments() {
     queryFn: async () => (await api.get<Appointment[]>('/appointments/today')).data,
   })
 }
+export function useAppointments(from: string, to: string) {
+  return useQuery({
+    queryKey: ['appointments', 'range', from, to],
+    queryFn: async () =>
+      (await api.get<Appointment[]>('/appointments', { params: { from, to } })).data,
+    enabled: !!from && !!to,
+  })
+}
 export function useAppointment(id: string) {
   return useQuery({
     queryKey: ['appointment', id],
@@ -68,8 +90,12 @@ export function useAppointment(id: string) {
 export function useCreateAppointment() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async (body: { patientId: string; doctorId: string; scheduledAt: string; reason?: string }) =>
-      (await api.post<Appointment>('/appointments', body)).data,
+    mutationFn: async (body: {
+      patientId: string
+      doctorId: string
+      scheduledAt: string
+      reason?: string
+    }) => (await api.post<Appointment>('/appointments', body)).data,
     onSuccess: () => qc.invalidateQueries({ queryKey: ['appointments'] }),
   })
 }
@@ -94,15 +120,21 @@ export function useSetStatus() {
 export function usePatientPrescriptions(patientId: string) {
   return useQuery({
     queryKey: ['prescriptions', patientId],
-    queryFn: async () => (await api.get<Prescription[]>(`/patients/${patientId}/prescriptions`)).data,
+    queryFn: async () =>
+      (await api.get<Prescription[]>(`/patients/${patientId}/prescriptions`)).data,
     enabled: !!patientId,
   })
 }
 export function useCreatePrescription() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async (body: { appointmentId: string; medication: string; dosage: string; frequency: string; expiryDate?: string }) =>
-      (await api.post<Prescription>('/prescriptions', body)).data,
+    mutationFn: async (body: {
+      appointmentId: string
+      medication: string
+      dosage: string
+      frequency: string
+      expiryDate?: string
+    }) => (await api.post<Prescription>('/prescriptions', body)).data,
     onSuccess: () => qc.invalidateQueries({ queryKey: ['prescriptions'] }),
   })
 }
@@ -114,13 +146,25 @@ export function usePatientRecords(patientId: string) {
     queryFn: async () => (await api.get<MedicalRecord[]>(`/patients/${patientId}/records`)).data,
     enabled: !!patientId,
     refetchInterval: (q) =>
-      (q.state.data as MedicalRecord[] | undefined)?.some((r) => r.summaryStatus === 1 || r.summaryStatus === 2) ? 3000 : false,
+      (q.state.data as MedicalRecord[] | undefined)?.some(
+        (r) => r.summaryStatus === 1 || r.summaryStatus === 2,
+      )
+        ? 3000
+        : false,
   })
 }
 export function useUploadRecord() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async ({ patientId, recordType, file }: { patientId: string; recordType: number; file: File }) => {
+    mutationFn: async ({
+      patientId,
+      recordType,
+      file,
+    }: {
+      patientId: string
+      recordType: number
+      file: File
+    }) => {
       const form = new FormData()
       form.append('patientId', patientId)
       form.append('recordType', String(recordType))
@@ -139,7 +183,10 @@ export async function openRecordFile(recordId: string) {
 
 // ---- Dashboard ----
 export function useDashboard() {
-  return useQuery({ queryKey: ['dashboard'], queryFn: async () => (await api.get<DashboardStats>('/dashboard/stats')).data })
+  return useQuery({
+    queryKey: ['dashboard'],
+    queryFn: async () => (await api.get<DashboardStats>('/dashboard/stats')).data,
+  })
 }
 
 // ---- AI ----

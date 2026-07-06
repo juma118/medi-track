@@ -6,10 +6,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Api.Realtime;
 
-/// <summary>
-/// Hosted in the API: consumes MedicalRecordSummarized events and pushes a real-time
-/// "SummaryReady" message to clients subscribed to that patient's group.
-/// </summary>
 public class RecordSummarizedConsumer : KafkaConsumerBase<MedicalRecordSummarizedEvent>
 {
     protected override string Topic => Topics.MedicalRecordSummarized;

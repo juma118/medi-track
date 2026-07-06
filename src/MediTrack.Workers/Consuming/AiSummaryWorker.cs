@@ -9,7 +9,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Workers.Consuming;
 
-/// <summary>Consumes MedicalRecordUploaded → extracts text → summarizes via AI → writes summary back.</summary>
 public class AiSummaryWorker : KafkaConsumerBase<MedicalRecordUploadedEvent>
 {
     protected override string Topic => Topics.MedicalRecordUploaded;
@@ -42,7 +41,6 @@ public class AiSummaryWorker : KafkaConsumerBase<MedicalRecordUploadedEvent>
             record.SummaryStatus = SummaryStatus.Ready;
             await db.SaveChangesAsync(ct);
 
-            // Notify clients in real time that the summary is ready.
             await events.PublishAsync(Topics.MedicalRecordSummarized, record.Id.ToString(),
                 new MedicalRecordSummarizedEvent(record.Id, record.PatientId, record.FileName, "Ready"), ct);
         }

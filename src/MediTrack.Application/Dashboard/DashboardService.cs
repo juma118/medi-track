@@ -27,7 +27,6 @@ public class DashboardService : IDashboardService
         var tomorrow = today.AddDays(1);
         var weekStart = today.AddDays(-6);
 
-        // KPI scalars come from the meditrack_dashboard_stats() stored procedure.
         var kpis = await _db.Database.QuerySingleAsync(
             "SELECT * FROM meditrack_dashboard_stats()",
             r => new

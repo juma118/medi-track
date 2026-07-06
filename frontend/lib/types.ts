@@ -31,7 +31,11 @@ export interface Paged<T> {
 
 export type AppointmentStatus = 1 | 2 | 3 | 4 | 5
 export const StatusName: Record<AppointmentStatus, string> = {
-  1: 'Scheduled', 2: 'Checked In', 3: 'Completed', 4: 'Cancelled', 5: 'No Show',
+  1: 'Scheduled',
+  2: 'Checked In',
+  3: 'Completed',
+  4: 'Cancelled',
+  5: 'No Show',
 }
 
 export interface Appointment {
@@ -63,7 +67,10 @@ export interface Prescription {
 
 export type SummaryStatus = 1 | 2 | 3 | 4
 export const SummaryStatusName: Record<SummaryStatus, string> = {
-  1: 'Pending', 2: 'Processing', 3: 'Ready', 4: 'Failed',
+  1: 'Pending',
+  2: 'Processing',
+  3: 'Ready',
+  4: 'Failed',
 }
 
 export interface MedicalRecord {
@@ -93,7 +100,11 @@ export interface SymptomAnalysis {
 }
 
 export type RefillStatus = 1 | 2 | 3
-export const RefillStatusName: Record<RefillStatus, string> = { 1: 'Requested', 2: 'Approved', 3: 'Denied' }
+export const RefillStatusName: Record<RefillStatus, string> = {
+  1: 'Requested',
+  2: 'Approved',
+  3: 'Denied',
+}
 
 export interface RefillRequest {
   id: string

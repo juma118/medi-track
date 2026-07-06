@@ -36,6 +36,7 @@ public interface IAppointmentService
     Task<AppointmentDto> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<IReadOnlyList<AppointmentDto>> GetForPatientAsync(Guid patientId, CancellationToken ct = default);
     Task<IReadOnlyList<AppointmentDto>> GetTodayAsync(Guid? doctorId, CancellationToken ct = default);
+    Task<IReadOnlyList<AppointmentDto>> GetRangeAsync(DateOnly from, DateOnly to, Guid? doctorId, CancellationToken ct = default);
     Task<AppointmentDto> SetDiagnosisAsync(Guid id, UpdateDiagnosisRequest request, CancellationToken ct = default);
     Task<AppointmentDto> SetStatusAsync(Guid id, UpdateAppointmentStatusRequest request, CancellationToken ct = default);
 }
@@ -54,7 +55,6 @@ public interface IMedicalRecordService
     Task<MedicalRecordFile> GetFileAsync(Guid id, CancellationToken ct = default);
 }
 
-/// <summary>The raw stored file for a medical record, ready to stream to the client.</summary>
 public record MedicalRecordFile(Stream Content, string FileName, string ContentType);
 
 public interface IDashboardService
@@ -68,7 +68,6 @@ public interface IAiAssistantService
     Task<PatientChatResponse> ChatAsync(Guid patientId, PatientChatRequest request, CancellationToken ct = default);
 }
 
-/// <summary>Patient-facing self-service. All operations are scoped to the logged-in patient.</summary>
 public interface IPatientPortalService
 {
     Task<PatientDto> GetMyProfileAsync(CancellationToken ct = default);
@@ -83,7 +82,6 @@ public interface IPatientPortalService
     Task<MessageDto> SendMessageAsync(SendMessageRequest request, CancellationToken ct = default);
 }
 
-/// <summary>Clinic-side management of portal activity (refills, messaging, account provisioning).</summary>
 public interface IClinicPortalService
 {
     Task<PatientAccountResult> CreatePatientAccountAsync(Guid patientId, CreatePatientAccountRequest request, CancellationToken ct = default);

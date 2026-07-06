@@ -1,6 +1,5 @@
 namespace MediTrack.Domain.Entities;
 
-/// <summary>Append-only record of every sensitive access/mutation. Never updated or deleted.</summary>
 public class AuditLog
 {
     public Guid Id { get; set; } = Guid.NewGuid();

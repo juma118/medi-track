@@ -31,5 +31,9 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
 
   if (!hydrated || !accessToken || !isPatient(role)) return <Loading />
 
-  return <AppShell items={items} brand="Patient Portal">{children}</AppShell>
+  return (
+    <AppShell items={items} brand="Patient Portal">
+      {children}
+    </AppShell>
+  )
 }

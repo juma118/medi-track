@@ -30,13 +30,19 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
     { href: '/dashboard', label: 'Dashboard', icon: <SpaceDashboardRoundedIcon /> },
     { href: '/patients', label: 'Patients', icon: <PeopleAltRoundedIcon /> },
     { href: '/appointments', label: 'Appointments', icon: <EventRoundedIcon /> },
-    ...(doctor ? [
-      { href: '/records', label: 'Medical Records', icon: <DescriptionRoundedIcon /> },
-      { href: '/prescriptions', label: 'Prescriptions', icon: <MedicationRoundedIcon /> },
-      { href: '/refill-requests', label: 'Refill Requests', icon: <AutorenewRoundedIcon /> },
-      { href: '/ai', label: 'AI Assistant', icon: <SmartToyRoundedIcon /> },
-    ] : []),
+    ...(doctor
+      ? [
+          { href: '/records', label: 'Medical Records', icon: <DescriptionRoundedIcon /> },
+          { href: '/prescriptions', label: 'Prescriptions', icon: <MedicationRoundedIcon /> },
+          { href: '/refill-requests', label: 'Refill Requests', icon: <AutorenewRoundedIcon /> },
+          { href: '/ai', label: 'AI Assistant', icon: <SmartToyRoundedIcon /> },
+        ]
+      : []),
   ]
 
-  return <AppShell items={items} brand="Clinic">{children}</AppShell>
+  return (
+    <AppShell items={items} brand="Clinic">
+      {children}
+    </AppShell>
+  )
 }

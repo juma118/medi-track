@@ -7,10 +7,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Workers.Consuming;
 
-/// <summary>
-/// Consumes AppointmentBooked → would send email/SMS reminders.
-/// MVP: logs the notification. Production: integrate Twilio/SendGrid here.
-/// </summary>
 public class NotificationWorker : KafkaConsumerBase<AppointmentBookedEvent>
 {
     protected override string Topic => Topics.AppointmentBooked;

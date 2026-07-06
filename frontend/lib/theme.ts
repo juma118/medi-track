@@ -32,7 +32,10 @@ const theme = createTheme({
     MuiCard: {
       defaultProps: { elevation: 0 },
       styleOverrides: {
-        root: { border: '1px solid rgba(15,23,42,0.07)', boxShadow: '0 1px 2px rgba(15,23,42,0.04)' },
+        root: {
+          border: '1px solid rgba(15,23,42,0.07)',
+          boxShadow: '0 1px 2px rgba(15,23,42,0.04)',
+        },
       },
     },
     MuiButton: {

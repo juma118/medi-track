@@ -11,6 +11,5 @@ public class User : AuditableEntity
     public UserRole Role { get; set; }
     public bool IsActive { get; set; } = true;
 
-    // Optional 1:1 link to a doctor profile when Role == Doctor
     public Doctor? Doctor { get; set; }
 }

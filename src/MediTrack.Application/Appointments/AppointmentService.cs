@@ -53,13 +53,26 @@ public class AppointmentService : IAppointmentService
         return dto ?? throw AppException.NotFound("Appointment");
     }
 
-    // Uses the meditrack_patient_full_history() stored procedure.
     public Task<IReadOnlyList<AppointmentDto>> GetForPatientAsync(Guid patientId, CancellationToken ct = default) =>
         ReadAppointmentsAsync("SELECT * FROM meditrack_patient_full_history(@patient)", ct, ("patient", patientId));
 
-    // Uses the meditrack_today_appointments() stored procedure.
     public Task<IReadOnlyList<AppointmentDto>> GetTodayAsync(Guid? doctorId, CancellationToken ct = default) =>
         ReadAppointmentsAsync("SELECT * FROM meditrack_today_appointments(@doctor)", ct, ("doctor", (object?)doctorId));
+
+    public async Task<IReadOnlyList<AppointmentDto>> GetRangeAsync(DateOnly from, DateOnly to, Guid? doctorId, CancellationToken ct = default)
+    {
+        if (to < from) (from, to) = (to, from);
+
+        var start = DateTime.SpecifyKind(from.ToDateTime(TimeOnly.MinValue), DateTimeKind.Utc);
+        var end = DateTime.SpecifyKind(to.AddDays(1).ToDateTime(TimeOnly.MinValue), DateTimeKind.Utc);
+
+        var query = _db.Appointments.AsNoTracking()
+            .Where(a => a.ScheduledAt >= start && a.ScheduledAt < end);
+        if (doctorId is { } docId)
+            query = query.Where(a => a.DoctorId == docId);
+
+        return await query.OrderBy(a => a.ScheduledAt).Select(Projection).ToListAsync(ct);
+    }
 
     private async Task<IReadOnlyList<AppointmentDto>> ReadAppointmentsAsync(string sql, CancellationToken ct, params (string, object?)[] ps) =>
         await _db.Database.QueryAsync(sql, r => new AppointmentDto(
@@ -67,8 +80,6 @@ public class AppointmentService : IAppointmentService
             r.GetDateTime(5), (AppointmentStatus)r.GetInt32(6),
             r.IsDBNull(7) ? null : r.GetString(7),
             r.IsDBNull(8) ? null : r.GetString(8)), ct, ps);
-
-
 
     public async Task<AppointmentDto> SetDiagnosisAsync(Guid id, UpdateDiagnosisRequest request, CancellationToken ct = default)
     {
@@ -89,7 +100,6 @@ public class AppointmentService : IAppointmentService
         return await GetByIdAsync(id, ct);
     }
 
-    // EF-translatable projection; navigation properties resolved via SQL joins.
     private static readonly Expression<Func<Appointment, AppointmentDto>> Projection = a => new AppointmentDto(
         a.Id, a.PatientId, a.Patient.FullName, a.DoctorId, a.Doctor.FullName,
         a.ScheduledAt, a.Status, a.Reason, a.Diagnosis);

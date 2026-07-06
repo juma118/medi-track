@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace MediTrack.Infrastructure.Persistence;
 
-/// <summary>Used by `dotnet ef` at design time to build the context for migrations.</summary>
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 {
     public ApplicationDbContext CreateDbContext(string[] args)

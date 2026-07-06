@@ -3,7 +3,6 @@ using MediTrack.Domain.Enums;
 
 namespace MediTrack.Domain.Entities;
 
-/// <summary>A patient's request to refill one of their prescriptions; reviewed by a doctor.</summary>
 public class RefillRequest : AuditableEntity
 {
     public Guid PatientId { get; set; }

@@ -8,11 +8,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Infrastructure.Messaging;
 
-/// <summary>
-/// Base background consumer: subscribes to one topic under a consumer group, deserializes JSON,
-/// and dispatches each message to HandleAsync inside a fresh DI scope. Commits after success.
-/// On repeated failure the raw message is routed to a dead-letter topic ("&lt;topic&gt;.dlq").
-/// </summary>
 public abstract class KafkaConsumerBase<TMessage> : BackgroundService
 {
     private const int MaxRetries = 3;
@@ -68,7 +63,6 @@ public abstract class KafkaConsumerBase<TMessage> : BackgroundService
             catch (OperationCanceledException) { break; }
             catch (ConsumeException ex)
             {
-                // Topic not yet created etc. — transient; back off briefly.
                 _logger.LogDebug(ex, "Consume issue on {Topic}", Topic);
                 await Task.Delay(1000, ct);
             }

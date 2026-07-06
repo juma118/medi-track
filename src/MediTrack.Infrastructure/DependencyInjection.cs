@@ -48,7 +48,6 @@ public static class DependencyInjection
         // AI provider selection
         var provider = config.GetSection("Ai")["Provider"]?.ToLowerInvariant();
         if (provider == "openai")
-            // Standard resilience: retries, circuit breaker, timeout (Polly via Http.Resilience).
             services.AddHttpClient<IAIService, OpenAIService>().AddStandardResilienceHandler();
         else
             services.AddSingleton<IAIService, StubAIService>();

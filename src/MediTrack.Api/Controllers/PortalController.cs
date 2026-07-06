@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediTrack.Api.Controllers;
 
-/// <summary>Patient-facing self-service. Every action is scoped to the logged-in patient.</summary>
 [ApiController]
 [Authorize(Roles = Roles.Patient)]
 [Route("api/portal")]
@@ -29,7 +28,6 @@ public class PortalController : ControllerBase
     [HttpGet("me")]
     public Task<PatientDto> Me(CancellationToken ct) => _portal.GetMyProfileAsync(ct);
 
-    /// <summary>Doctors the patient can book with.</summary>
     [HttpGet("doctors")]
     public Task<IReadOnlyList<DoctorDto>> Doctors(CancellationToken ct) => _doctors.GetAllAsync(ct);
 

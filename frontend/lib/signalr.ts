@@ -17,7 +17,10 @@ export async function getConnection(): Promise<HubConnection> {
   return connection
 }
 
-export async function subscribeToPatient(patientId: string, onSummaryReady: (data: unknown) => void) {
+export async function subscribeToPatient(
+  patientId: string,
+  onSummaryReady: (data: unknown) => void,
+) {
   const conn = await getConnection()
   conn.off('SummaryReady')
   conn.on('SummaryReady', onSummaryReady)

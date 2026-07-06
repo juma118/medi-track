@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediTrack.Api.Controllers;
 
-/// <summary>Clinic-staff management of patient-portal activity.</summary>
 [ApiController]
 [Authorize(Roles = Roles.Staff)]
 [Route("api")]
@@ -16,7 +15,6 @@ public class ClinicPortalController : ControllerBase
 
     public ClinicPortalController(IClinicPortalService clinic) => _clinic = clinic;
 
-    /// <summary>Receptionist provisions a portal login for a patient.</summary>
     [HttpPost("patients/{patientId:guid}/account")]
     [Authorize(Roles = Roles.Receptionist)]
     public Task<PatientAccountResult> CreateAccount(Guid patientId, CreatePatientAccountRequest request, CancellationToken ct)

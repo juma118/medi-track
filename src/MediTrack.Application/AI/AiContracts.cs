@@ -13,7 +13,6 @@ public record RecordSummary(
     IReadOnlyList<string> Allergies,
     IReadOnlyList<string> Recommendations);
 
-/// <summary>Low-level LLM client (implemented in Infrastructure against OpenAI/Claude).</summary>
 public interface IAIService
 {
     Task<SymptomAnalysisResult> AnalyzeSymptomsAsync(string symptoms, CancellationToken ct = default);

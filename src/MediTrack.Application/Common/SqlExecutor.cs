@@ -5,10 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MediTrack.Application.Common;
 
-/// <summary>
-/// Minimal helper to call stored procedures (Postgres functions) via raw SQL and map
-/// rows to DTOs, without leaking the concrete provider into the application layer.
-/// </summary>
 public static class SqlExecutor
 {
     public static async Task<List<T>> QueryAsync<T>(

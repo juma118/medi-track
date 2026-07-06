@@ -50,7 +50,6 @@ public class JwtTokenService : ITokenService
     }
 }
 
-/// <summary>Refresh tokens stored in Redis (single-use; consumed on refresh).</summary>
 public class RedisRefreshTokenStore : IRefreshTokenStore
 {
     private readonly IDistributedCache _cache;

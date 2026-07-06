@@ -19,7 +19,6 @@ public class MedicalRecordsController : ControllerBase
     [HttpGet("{id:guid}")]
     public Task<MedicalRecordDto> Get(Guid id, CancellationToken ct) => _records.GetByIdAsync(id, ct);
 
-    /// <summary>Streams the original uploaded document (both roles may view).</summary>
     [HttpGet("{id:guid}/file")]
     public async Task<IActionResult> Download(Guid id, CancellationToken ct)
     {
@@ -27,7 +26,6 @@ public class MedicalRecordsController : ControllerBase
         return File(file.Content, file.ContentType, file.FileName);
     }
 
-    /// <summary>Uploads a document; AI summarization is dispatched asynchronously via Kafka.</summary>
     [HttpPost]
     [Authorize(Roles = Roles.Doctor)]
     [RequestSizeLimit(20_000_000)]

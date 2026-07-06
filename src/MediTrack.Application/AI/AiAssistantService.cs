@@ -39,7 +39,6 @@ public class AiAssistantService : IAiAssistantService
         return new PatientChatResponse(answer);
     }
 
-    // Lightweight RAG: assemble grounded context from the patient's real records.
     private async Task<string> BuildContextAsync(Guid patientId, string name, DateOnly dob, string? blood, string? history, CancellationToken ct)
     {
         var sb = new StringBuilder();

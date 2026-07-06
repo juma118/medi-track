@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Workers.Consuming;
 
-/// <summary>Consumes audit events and persists them immutably to the audit_logs table.</summary>
 public class AuditWorker : KafkaConsumerBase<AuditEventMessage>
 {
     protected override string Topic => Topics.AuditEvent;

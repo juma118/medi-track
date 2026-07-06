@@ -5,10 +5,8 @@ using MediTrack.Workers.Consuming;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-// Workers share the Infrastructure layer (DbContext, Redis, Kafka, AI, file storage).
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// No HTTP context in workers — audit actor is system/unknown.
 builder.Services.AddSingleton<ICurrentUser, NullCurrentUser>();
 
 // Kafka consumers

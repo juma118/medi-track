@@ -1,6 +1,5 @@
 namespace MediTrack.Application.Common;
 
-/// <summary>Domain/validation error that maps to a 4xx response.</summary>
 public class AppException : Exception
 {
     public int StatusCode { get; }

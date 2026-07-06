@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 
 namespace MediTrack.Infrastructure.Messaging;
 
-/// <summary>Singleton Kafka producer. Reuses one underlying producer across the app.</summary>
 public sealed class KafkaEventPublisher : IEventPublisher, IDisposable
 {
     private static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web);

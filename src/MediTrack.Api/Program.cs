@@ -41,7 +41,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
 
-        // Allow SignalR clients to authenticate via the access_token query string.
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = ctx =>
@@ -55,7 +54,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-// SignalR with optional Redis backplane (fans out across replicas)
 var signalR = builder.Services.AddSignalR();
 var redisConn = builder.Configuration.GetConnectionString("Redis");
 if (!string.IsNullOrWhiteSpace(redisConn))
@@ -89,10 +87,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Real-time bridge: consume "summary ready" events and push them over SignalR.
 builder.Services.AddHostedService<MediTrack.Api.Realtime.RecordSummarizedConsumer>();
 
-// Rate limiting — protects the (costly) AI endpoints.
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -104,14 +100,11 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
-// Deep health checks — probe the real dependencies.
 var pgConn = builder.Configuration.GetConnectionString("Postgres")!;
 var hc = builder.Services.AddHealthChecks().AddNpgSql(pgConn, name: "postgres");
 if (!string.IsNullOrWhiteSpace(redisConn)) hc.AddRedis(redisConn, name: "redis");
 hc.AddKafka(new Confluent.Kafka.ProducerConfig { BootstrapServers = builder.Configuration["Kafka:BootstrapServers"] }, name: "kafka");
 
-// OpenTelemetry — tracing + metrics for API, HTTP client, and runtime.
-// Exports to OTLP when OTEL_EXPORTER_OTLP_ENDPOINT is set; falls back to console in Development.
 var otelConsole = builder.Environment.IsDevelopment();
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(r => r.AddService("MediTrack.Api"))
@@ -142,7 +135,6 @@ app.MapControllers();
 app.MapHub<NotificationsHub>("/hubs/notifications");
 app.MapHealthChecks("/health");
 
-// Apply migrations + seed baseline data on startup (MVP convenience).
 if (builder.Configuration.GetValue("Database:MigrateOnStartup", true))
     await DbSeeder.MigrateAndSeedAsync(app.Services);
 

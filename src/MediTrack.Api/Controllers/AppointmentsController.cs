@@ -22,6 +22,10 @@ public class AppointmentsController : ControllerBase
     public Task<IReadOnlyList<AppointmentDto>> Today([FromQuery] Guid? doctorId, CancellationToken ct)
         => _appointments.GetTodayAsync(doctorId, ct);
 
+    [HttpGet]
+    public Task<IReadOnlyList<AppointmentDto>> Range([FromQuery] DateOnly from, [FromQuery] DateOnly to, [FromQuery] Guid? doctorId, CancellationToken ct)
+        => _appointments.GetRangeAsync(from, to, doctorId, ct);
+
     [HttpPost]
     [Authorize(Roles = Roles.Receptionist)]
     public async Task<ActionResult<AppointmentDto>> Create(CreateAppointmentRequest request, CancellationToken ct)

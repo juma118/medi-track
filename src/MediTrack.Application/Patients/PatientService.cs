@@ -23,7 +23,6 @@ public class PatientService : IPatientService
         var term = string.IsNullOrWhiteSpace(query.Search) ? null : query.Search.Trim();
         var blood = string.IsNullOrWhiteSpace(query.BloodType) ? null : query.BloodType.Trim();
 
-        // Paginated search via the meditrack_search_patients() stored procedure (total via window count).
         long total = 0;
         var rows = await _db.Database.QueryAsync(
             "SELECT * FROM meditrack_search_patients(@term, @blood, @limit, @offset)",

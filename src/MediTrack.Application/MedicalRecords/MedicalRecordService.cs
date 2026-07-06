@@ -40,7 +40,6 @@ public class MedicalRecordService : IMedicalRecordService
         _db.MedicalRecords.Add(record);
         await _db.SaveChangesAsync(ct);
 
-        // Hand off AI summarization to the worker — request returns immediately.
         await _events.PublishAsync(Topics.MedicalRecordUploaded, record.Id.ToString(),
             new MedicalRecordUploadedEvent(record.Id, record.PatientId, blobKey, fileName), ct);
         await _audit.LogAsync("MedicalRecordUploaded", "MedicalRecord", record.Id.ToString(), ct: ct);

@@ -1,6 +1,5 @@
 namespace MediTrack.Domain.Entities;
 
-/// <summary>A secure message in a patient&lt;-&gt;clinic thread (keyed by PatientId).</summary>
 public class Message
 {
     public Guid Id { get; set; } = Guid.NewGuid();
